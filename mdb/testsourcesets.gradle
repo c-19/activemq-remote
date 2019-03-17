@@ -1,0 +1,32 @@
+/*
+ * Copyright (c) 2018 - 2018, C19, all rights reserved.
+ *
+ * This software is licensed under under GPL-3.0-only or GPL-3.0-or-later, https://opensource.org/licenses/GPL-3.0
+ *
+ */
+
+//-*- coding: utf-8 -*-
+allprojects {
+    plugins.withType(JavaPlugin) {
+        configurations{
+           integration        
+        }        
+        sourceSets{
+           integration{
+              compileClasspath += main.output + test.output
+              runtimeClasspath += main.output + test.output
+              compileClasspath += configurations.testCompileClasspath
+              runtimeClasspath += configurations.testRuntimeClasspath
+           }
+        }      
+        
+        task intTest( type: Test){
+           testClassesDirs = sourceSets.integration.output.classesDirs
+           classpath += sourceSets.integration.compileClasspath
+           classpath += sourceSets.integration.runtimeClasspath           
+           reports.html.destination = file("$reports.html.destination/../integration")
+           reports.junitXml.destination = file("$reports.junitXml.destination/../integration")
+        }
+        
+    }
+}

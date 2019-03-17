@@ -1,0 +1,20 @@
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.ear
+
+# Intellij:
+.idea/
+*.iws
+/out/
+.idea_modules/
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
+
+# Gradle
+build/
+.gradle/

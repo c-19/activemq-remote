@@ -1,0 +1,52 @@
+/*
+ * Copyright (c) 2018 - 2018, C19, all rights reserved.
+ *
+ * This software is licensed under under GPL-3.0-only or GPL-3.0-or-later, https://opensource.org/licenses/GPL-3.0
+ *
+ */
+
+//-*- coding: utf-8 -*-
+buildscript {
+    repositories {
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+    dependencies {
+        classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
+    }
+}
+
+plugins {
+    id 'org.sonarqube' version '2.5'
+}
+
+apply from: 'testsourcesets.gradle'
+
+allprojects{
+    apply plugin: 'propdeps'
+    apply plugin: 'propdeps-maven'
+    apply plugin: 'propdeps-idea'
+    apply plugin: 'propdeps-eclipse'
+    
+    tasks.withType(JavaCompile) { 
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+        options.compilerArgs << "-Xlint:all" << "-Werror"
+      }
+      repositories {
+        mavenCentral()
+  }
+}
+
+subprojects{
+  apply from: "$rootProject.projectDir/versions.gradle"
+}
+
+sonarqube {
+    properties {
+        properties["sonar.host.url"] = 'http://localhost:9000'
+        properties["sonar.verbose"] = "true"
+        properties['sonar.java.source'] = 8
+    }
+}
+
+

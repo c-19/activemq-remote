@@ -1,0 +1,18 @@
+/*
+ * Copyright (c) 2018 - 2018, C19, all rights reserved.
+ *
+ * This software is licensed under under GPL-3.0-only or GPL-3.0-or-later, https://opensource.org/licenses/GPL-3.0
+ *
+ */
+
+//-*- coding: utf-8 -*-
+ext.libs = [
+
+  javaee_api: 'javax:javaee-api:7.0',
+
+  // for spock
+  groovy_all: 'org.codehaus.groovy:groovy-all:2.4.4+',
+  spock_core: 'org.spockframework:spock-core:1.0-groovy-2.4',
+  cglib_nodep: 'cglib:cglib-nodep:3.2.4',
+  objenesis: 'org.objenesis:objenesis:2.6'
+]
