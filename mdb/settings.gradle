@@ -7,4 +7,3 @@
 
 //-*- coding: utf-8 -*-
 include 'mdb'
-include 'app'

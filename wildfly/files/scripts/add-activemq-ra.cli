@@ -31,7 +31,7 @@ $ra/config-properties=ServerUrl:add(value=$serverUrl)
 
 ## RA Connection Definitions
 $ra/connection-definitions=ConnectionFactory:add(\
-    class-name=org.apache.activemq.ra.ActiveMQManagedConnectionFactory,\
+    class-name=$conClassName,\
     jndi-name=$conJndiName,\
     min-pool-size=$conMinPoolSize,\
     max-pool-size=$conMaxPoolSize,\
