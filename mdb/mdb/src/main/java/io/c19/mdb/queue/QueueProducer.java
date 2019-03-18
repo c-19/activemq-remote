@@ -1,26 +1,21 @@
-package io.c19.mdb.topic;
+package io.c19.mdb.queue;
 
 import io.c19.mdb.DestinationProducer;
 
 import javax.annotation.Resource;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
-import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
+import javax.jms.Queue;
 
 @Singleton
-public class TopicProducer
+public class QueueProducer
 {
     @Resource(mappedName = "java:/ConnectionFactory")
     private ConnectionFactory connectionFactory;
 
-    @Resource(mappedName="java:/topic/topic01")
-    private Topic topic;
+    @Resource(mappedName="java:/queue/queue01")
+    private Queue queue;
 
     private int counter = 0;
 
@@ -28,6 +23,6 @@ public class TopicProducer
     public void createMessage( )
     {
         String message = "Count: " + counter++;
-        DestinationProducer.sendMessage( connectionFactory, topic, message );
+        DestinationProducer.sendMessage( connectionFactory, queue, message );
     }
 }

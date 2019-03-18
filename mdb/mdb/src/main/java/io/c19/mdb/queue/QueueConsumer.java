@@ -5,7 +5,7 @@
  *
  */
 
-package io.c19.mdb;
+package io.c19.mdb.queue;
 
 
 import javax.ejb.ActivationConfigProperty;
@@ -18,7 +18,7 @@ import javax.jms.MessageListener;
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")
 })
-public class MessageConsumer implements MessageListener
+public class QueueConsumer implements MessageListener
 {
 
     @Override
