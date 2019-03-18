@@ -1,0 +1,27 @@
+set raId=${ra.id}
+set name=${name}
+set className=${class-name}
+set jndiName=${jndi-name}
+set useJavaContext=${useJavaContext}
+set physicalName=${config.PhysicalName}
+
+## Start Embedded Server to allow offline configuration
+embed-server --server-config=standalone.xml --std-out=echo
+
+batch
+
+## Add Queue Admin Object to ResourceAdapter
+set ra=/subsystem=resource-adapters/resource-adapter=$raId
+set queue=$ra/admin-objects=${name}
+
+$queue:add(\
+    class-name=$className,\
+    jndi-name=$jndiName,\
+    use-java-context=$useJavaContext)
+
+$queue/config-properties=PhysicalName:add(value=$physicalName)
+
+run-batch
+
+## Shutdown Embedded Server
+stop-embedded-server

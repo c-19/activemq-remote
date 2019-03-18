@@ -1,0 +1,51 @@
+## Assign all variables from properties
+set id=${id}
+set archive=${archive}
+set transactionSupport=${transaction-support}
+set serverUrl=${config.ServerUrl}
+set username=${config.UserName}
+set password=${config.Password}
+set conClassName=${connection.class-name}
+set conJndiName=${connection.jndi-name}
+set conMinPoolSize=${connection.pool.min-pool-size}
+set conMaxPoolSize=${connection.pool.max-pool-size}
+set conPoolPrefill=${connection.pool.prefill}
+set conSameRmOverride=${conneciton.pool.same-rm-override}
+
+## Start Embedded Server to allow offline configuration
+embed-server --server-config=standalone.xml --std-out=echo
+
+batch
+
+## RA path
+set ra=/subsystem=resource-adapters/resource-adapter=$id
+
+## RA Config
+$ra:add(archive=$archive,transaction-support=$transactionSupport)
+
+## RA Config Properties
+$ra/config-properties=UseInboundSession:add(value=false)
+$ra/config-properties=UserName:add(value=$username)
+$ra/config-properties=Password:add(value=$password)
+$ra/config-properties=ServerUrl:add(value=$serverUrl)
+
+## RA Connection Definitions
+$ra/connection-definitions=ConnectionFactory:add(\
+    class-name=org.apache.activemq.ra.ActiveMQManagedConnectionFactory,\
+    jndi-name=$conJndiName,\
+    min-pool-size=$conMinPoolSize,\
+    max-pool-size=$conMaxPoolSize,\
+    pool-prefill=$conPoolPrefill,\
+    same-rm-override=$conSameRmOverride)
+
+## Enable JMS
+/subsystem=ee:list-add(name=global-modules, value={"name" => "javax.jms.api", "slot"=>"main"}
+
+## Set Default RA
+/subsystem=ejb3:write-attribute(name="default-mdb-instance-pool", value="mdb-strict-max-pool")
+/subsystem=ejb3:write-attribute(name="default-resource-adapter-name", value=$id)
+
+run-batch
+
+## Shutdown Embedded Server
+stop-embedded-server
