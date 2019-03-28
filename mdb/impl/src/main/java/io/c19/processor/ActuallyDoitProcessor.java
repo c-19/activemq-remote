@@ -1,4 +1,4 @@
-package io.c19.mdb.queue;
+package io.c19.processor;
 
 public class ActuallyDoitProcessor
 {

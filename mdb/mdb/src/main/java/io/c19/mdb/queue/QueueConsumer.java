@@ -8,6 +8,8 @@
 package io.c19.mdb.queue;
 
 
+import io.c19.processor.JobProcessor;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.inject.Inject;
@@ -21,8 +23,9 @@ import javax.jms.MessageListener;
 })
 public class QueueConsumer implements MessageListener
 {
+    @TheProcessor
     @Inject
-    private JobWrapper processor;
+    private JobProcessor processor;
 
 /*    public QueueConsumer()
     {
@@ -39,7 +42,7 @@ public class QueueConsumer implements MessageListener
     public void onMessage(Message message)
     {
         System.out.println( "Recieved a message." + message.toString() );
-        processor.getProcessor().doIt(  message.toString() );
+        processor.doIt(  message.toString() );
         System.out.println( "Finished with message." + message.toString() );
     }
 }

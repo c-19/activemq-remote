@@ -12,7 +12,7 @@ apply plugin: 'jacoco'
 
 dependencies {
     compileOnly libs.javaee_api
-    compileOnly project(":api")
+
     //Test
     //Spock
     testCompile libs.groovy_all

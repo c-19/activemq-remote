@@ -1,0 +1,13 @@
+## Start Embedded Server to allow offline configuration
+embed-server --server-config=standalone.xml --std-out=echo
+
+batch
+
+## Enable JMS
+/subsystem=ee:list-add(name=global-modules, value={"name" => "io.c19.api", "slot"=>"main"}
+/subsystem=ee:list-add(name=global-modules, value={"name" => "io.c19.processors", "slot"=>"main"}
+
+run-batch
+
+## Shutdown Embedded Server
+stop-embedded-server

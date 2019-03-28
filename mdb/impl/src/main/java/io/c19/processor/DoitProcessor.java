@@ -1,11 +1,11 @@
-package io.c19.mdb.queue;
+package io.c19.processor;
 
 import javax.inject.Inject;
 
 public class DoitProcessor implements JobProcessor
 {
     private ActuallyDoitProcessor processor;
-    
+
     @Inject
     public DoitProcessor(ActuallyDoitProcessor processor)
     {
