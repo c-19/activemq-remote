@@ -10,6 +10,7 @@ package io.c19.mdb.queue;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
@@ -20,10 +21,25 @@ import javax.jms.MessageListener;
 })
 public class QueueConsumer implements MessageListener
 {
+    @Inject
+    private JobWrapper processor;
+
+/*    public QueueConsumer()
+    {
+        //CDI no args
+    }
+
+
+    public QueueConsumer( JobProcessor processor )
+    {
+        this.processor = processor;
+    }*/
 
     @Override
     public void onMessage(Message message)
     {
         System.out.println( "Recieved a message." + message.toString() );
+        processor.getProcessor().doIt(  message.toString() );
+        System.out.println( "Finished with message." + message.toString() );
     }
 }
